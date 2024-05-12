@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atclq.ssyx.activity.mapper.ActivityInfoMapper">
+
+
+    <!-- // 如果之前参加过，活动正在进行中，排除商品 -->
+    <select id="selectExistSkuIdList" resultType="java.lang.Long">
+        select sku.sku_id from activity_info info inner join activity_sku sku on info.id = sku.activity_id
+        <where>
+            <if test="skuIdList != null">
+                and sku.sku_id in
+                <foreach collection="skuIdList" item="item" index="index" open="(" separator="," close=")"> #{item} </foreach>
+            </if>
+        </where>
+        and now() between info.start_time and info.end_time
+    </select>
+
+
+
+    <resultMap id="ActivityRuleMap" type="com.atclq.ssyx.model.activity.ActivityRule" autoMapping="true"/>
+    <!-- //根据skuId进行查询，查询sku对应活动里面规则列表 -->
+    <select id="findActivityRule" resultMap="ActivityRuleMap">
+        select info.activity_type as activityType, rule.id, rule.activity_id, rule.condition_amount, rule.condition_num, rule.benefit_amount, rule.benefit_discount
+        from activity_info info
+            inner join activity_sku sku on info.id=sku.activity_id
+            inner join activity_rule rule on info.id = rule.activity_id
+        where sku.sku_id = #{skuId}
+            and now() between info.start_time and info.end_time order by rule.condition_amount desc
+    </select>
+
+
+
+    <resultMap id="ActivitySkuMap" type="com.atclq.ssyx.model.activity.ActivitySku" autoMapping="true"/>
+    <!--  //根据所有skuId列表获取参与活动 -->
+    <select id="selectCartActivity" resultMap="ActivitySkuMap">
+        select info.id as activityId, sku.sku_id as skuId
+        from activity_info info
+            inner join activity_sku sku on info.id = sku.activity_id
+        <where>
+            and sku.sku_id in
+            <foreach collection="skuIdList" item="item" open="(" close=")" separator=","> #{item} </foreach>
+        </where>
+        and now() between info.start_time and info.end_time
+    </select>
+
+</mapper>
