@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.github.houkunlin.database.generator.config.ConfigService">
+    <option name="settings">
+      <Settings>
+        <option name="controllerPackage" value="com.atclq.ssyx.product.controller" />
+        <option name="daoPackage" value="com.atclq.ssyx.product.mapper" />
+        <option name="daoSuffix" value="Mapper" />
+        <option name="entityPackage" value="" />
+        <option name="entitySuffix" value="" />
+        <option name="javaPath" value="src/main/java/" />
+        <option name="projectPath" value="D:\programme\IdeaProjects\ssyx-parent\service\service-product" />
+        <option name="servicePackage" value="com.atclq.ssyx.product.service" />
+        <option name="xmlPackage" value="" />
+      </Settings>
+    </option>
+  </component>
+</project>
