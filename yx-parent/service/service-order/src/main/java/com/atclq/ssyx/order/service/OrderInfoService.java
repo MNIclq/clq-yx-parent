@@ -34,4 +34,7 @@ public interface OrderInfoService extends IService<OrderInfo> {
 
     //订单查询
     IPage<OrderInfo> getOrderInfoByUserIdPage(Page<OrderInfo> pageParam, OrderUserQueryVo orderUserQueryVo);
+
+    //管理员订单列表查询
+    IPage<OrderInfo> selectPage(Page<OrderInfo> pageParam, OrderUserQueryVo orderUserQueryVo);
 }

@@ -525,4 +525,21 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         }
         return couponInfoSplitAmountMap;
     }
+
+    //管理员订单列表查询
+    @Override
+    public IPage<OrderInfo> selectPage(Page<OrderInfo> pageParam, OrderUserQueryVo orderUserQueryVo) {
+        LambdaQueryWrapper<OrderInfo> wrapper = new LambdaQueryWrapper<>();
+        if (orderUserQueryVo != null) {
+            if (orderUserQueryVo.getOrderStatus() != null) {
+                wrapper.eq(OrderInfo::getOrderStatus, orderUserQueryVo.getOrderStatus());
+            }
+            if (orderUserQueryVo.getUserId() != null) {
+                wrapper.eq(OrderInfo::getUserId, orderUserQueryVo.getUserId());
+            }
+        }
+        wrapper.orderByDesc(OrderInfo::getCreateTime);
+        IPage<OrderInfo> pageModel = baseMapper.selectPage(pageParam, wrapper);
+        return pageModel;
+    }
 }

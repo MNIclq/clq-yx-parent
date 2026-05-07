@@ -28,7 +28,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping(value="/api/order")
+@RequestMapping(value="/admin/order/orderInfo")
 public class OrderInfoController {
 
     @Autowired
@@ -50,6 +50,20 @@ public class OrderInfoController {
         //分页查询条件
         Page<OrderInfo> pageParam = new Page<>(page,limit);
         IPage<OrderInfo> pageModel = orderInfoService.getOrderInfoByUserIdPage(pageParam,orderUserQueryVo);
+        return Result.ok(pageModel);
+    }
+
+    @ApiOperation("获取订单列表")
+    @GetMapping("{page}/{limit}")
+    public Result getPageList(
+            @ApiParam(name = "page", value = "当前页码", required = true)
+            @PathVariable Long page,
+            @ApiParam(name = "limit", value = "每页记录数", required = true)
+            @PathVariable Long limit,
+            @ApiParam(name = "searchObj", value = "查询对象", required = false)
+            OrderUserQueryVo searchObj) {
+        Page<OrderInfo> pageParam = new Page<>(page, limit);
+        IPage<OrderInfo> pageModel = orderInfoService.selectPage(pageParam, searchObj);
         return Result.ok(pageModel);
     }
 

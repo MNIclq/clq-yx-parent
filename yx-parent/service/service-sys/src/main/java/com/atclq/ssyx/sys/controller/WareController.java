@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/sys/ware")
 //@CrossOrigin    //允许跨域请求          后面已使用网关替代
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class WareController {
 
     @Autowired

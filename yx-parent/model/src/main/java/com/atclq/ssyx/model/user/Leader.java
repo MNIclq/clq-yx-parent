@@ -109,4 +109,8 @@ public class Leader extends BaseEntity {
 	@TableField("check_content")
 	private String checkContent;
 
+	@ApiModelProperty(value = "区域名称")
+	@TableField(exist = false)
+	private String regionName;
+
 }
